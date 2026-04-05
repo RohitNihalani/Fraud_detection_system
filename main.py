@@ -6,7 +6,7 @@ from src.schema.schema import BankData
 
 app = FastAPI()
 
-model=joblib.load("models/model.pkl")
+model=joblib.load("models/best_model.pkl")
 
 @app.get("/")
 def home():

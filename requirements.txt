@@ -5,3 +5,4 @@ fastapi
 joblib
 streamlit
 uvicorn
+mlflow
