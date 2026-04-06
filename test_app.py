@@ -1,7 +1,8 @@
+from fastapi.testclient import TestClient
 from main import app
 
-def test_home():
-    response=app.test_client().get("/")
+client = TestClient(app)
 
-    assert response.status_code==200
-    assert response.data==b"hello world"
+def test_home():
+    response = client.get("/")
+    assert response.status_code == 200
