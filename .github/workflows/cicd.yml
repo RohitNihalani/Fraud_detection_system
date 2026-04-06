@@ -25,6 +25,7 @@ jobs:
       
       - name: Run Tests
         run: |
+            pytest
 
         deploy:
     needs: test  # Only runs if tests pass
