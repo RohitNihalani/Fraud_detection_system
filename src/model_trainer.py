@@ -9,13 +9,13 @@ from sklearn.tree import DecisionTreeClassifier
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import recall_score, precision_recall_curve, auc, classification_report
 
-# Setup MLflow Tracking (Phase 5)
+
 mlflow.set_tracking_uri("http://127.0.0.1:5000/")
 mlflow.set_experiment("Fraud_Detection_System")
 
 class ModelTrainer:
     def train_model(self, X, y, preprocessor):
-        # Phase 2: Stratified 80/20 split for imbalance handling [cite: 23]
+        # Phase 2: Stratified 80/20 split for imbalance handling 
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=42, stratify=y
         )
@@ -31,7 +31,7 @@ class ModelTrainer:
         best_pipeline = None
 
         for name, model_obj in models.items():
-            # Phase 5: Start MLflow run for each model [cite: 43]
+            # Phase 5: Start MLflow run for each model 
             with mlflow.start_run(run_name=name):
                 pipeline = Pipeline([
                     ('preprocess', preprocessor),
@@ -45,7 +45,7 @@ class ModelTrainer:
                 y_pred = pipeline.predict(X_test)
                 y_proba = pipeline.predict_proba(X_test)[:, 1]
                 
-                # Phase 3 & 5: Strategic Metrics for Imbalance [cite: 31, 40]
+                # Phase 3 & 5: Strategic Metrics for Imbalance 
                 recall = recall_score(y_test, y_pred)
                 precision, rec_curve, _ = precision_recall_curve(y_test, y_proba)
                 pr_auc = auc(rec_curve, precision)
@@ -61,11 +61,11 @@ class ModelTrainer:
                 print(f"--- {name} ---")
                 print(classification_report(y_test, y_pred))
 
-                # Track best model for Phase 4 deliverable [cite: 34]
+                # Track best model for Phase 4 deliverable 
                 if recall > best_recall:
                     best_recall = recall
                     best_pipeline = pipeline
-                    # Save as best_model.pkl for Phase 6 API [cite: 34]
+                    # Save as best_model.pkl for Phase 6 API 
                     os.makedirs('models', exist_ok=True)
                     joblib.dump(pipeline, 'models/best_model.pkl')
 
