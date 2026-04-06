@@ -27,7 +27,7 @@ jobs:
         run: |
             pytest test_app.py
 
-        deploy:
+  deploy:
     needs: test  # Only runs if tests pass
     runs-on: ubuntu-latest
     steps:
