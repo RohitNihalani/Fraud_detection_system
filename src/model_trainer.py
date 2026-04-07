@@ -38,34 +38,29 @@ class ModelTrainer:
                     ('model', model_obj)
                 ])
 
-                # Train
+                
                 pipeline.fit(X_train, y_train)
                 
-                # Predict
+                
                 y_pred = pipeline.predict(X_test)
                 y_proba = pipeline.predict_proba(X_test)[:, 1]
                 
-                # Phase 3 & 5: Strategic Metrics for Imbalance 
                 recall = recall_score(y_test, y_pred)
                 precision, rec_curve, _ = precision_recall_curve(y_test, y_proba)
                 pr_auc = auc(rec_curve, precision)
                 
-                # Log to MLflow [cite: 40]
                 mlflow.log_params(model_obj.get_params())
                 mlflow.log_metric("recall", recall)
                 mlflow.log_metric("pr_auc", pr_auc)
                 
-                # Log the model artifact to MLflow [cite: 42]
                 mlflow.sklearn.log_model(pipeline, "model_pipeline")
 
                 print(f"--- {name} ---")
                 print(classification_report(y_test, y_pred))
 
-                # Track best model for Phase 4 deliverable 
                 if recall > best_recall:
                     best_recall = recall
                     best_pipeline = pipeline
-                    # Save as best_model.pkl for Phase 6 API 
                     os.makedirs('models', exist_ok=True)
                     joblib.dump(pipeline, 'models/best_model.pkl')
 
