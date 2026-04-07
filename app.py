@@ -22,7 +22,7 @@ if st.button("Detect Transaction"):
         'oldbalanceDest':oldbalanceDest,
         'newbalanceDest':newbalanceDest
     }
-    response=requests.post("http://127.0.0.1:8000/predict",json=input_data)
+    response=requests.post("http://32.236.40.108:8001/predict",json=input_data)
     result=response.json()
     st.subheader("prediction result")
     st.success(result["prediction"])
